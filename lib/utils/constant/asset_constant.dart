@@ -1,0 +1,34 @@
+class AppImage {
+  static String email = 'assets/image/email.svg';
+  static String lock = 'assets/image/lock.svg';
+  static String user = 'assets/image/user.svg';
+  static String number = 'assets/image/number.svg';
+  static String logo = 'assets/image/logo.png';
+  static String home = 'assets/image/home.svg';
+  static String profile = 'assets/image/profile.svg';
+  static String campaign = 'assets/image/campaign.svg';
+  static String edit = 'assets/image/edit.svg';
+  static String wallet = 'assets/image/wallet.svg';
+  static String logout = 'assets/image/logout.svg';
+  static String menu = 'assets/image/menu.svg';
+  static String createCampaign = 'assets/image/create_campaign.svg';
+  static String deviceConnect = 'assets/image/device_connect.svg';
+  static String changePassword = 'assets/image/change_password.svg';
+  static String call = 'assets/image/call.svg';
+  static String mail = 'assets/image/mail.svg';
+  static String referralCode = 'assets/image/referralCode.svg';
+  static String result = 'assets/image/result.png';
+  static String withdrawal = 'assets/image/withdrawal.png';
+  static String addMoney = 'assets/image/addMoney.png';
+  static String whatsapp = 'assets/image/whatsapp.svg';
+  static String support = 'assets/image/support.svg';
+  static String send = 'assets/image/send.svg';
+  static String history = 'assets/image/history.svg';
+  static String bank = 'assets/image/bank.svg';
+  static String appLogo = 'assets/image/app_logo.png';
+  static String about = 'assets/image/about.svg';
+  static String referAndEarn = 'assets/image/referAndEarn.svg';
+  static String outlineWhatsApp = 'assets/image/outline-whatsApp.svg';
+  // static String gift = 'assets/image/gift.svg';
+  static String gift = 'assets/image/gift.json';
+}

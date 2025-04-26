@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "801022199930",
+    "project_id": "kerala-fatafat-bc236",
+    "storage_bucket": "kerala-fatafat-bc236.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801022199930:android:d492f47f109a366d2413c3",
+        "android_client_info": {
+          "package_name": "com.example.kolkata_fatafat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzUDDetZj-fs20F2-2pSdDhsQbamAMb74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
