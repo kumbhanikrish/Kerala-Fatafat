@@ -72,30 +72,43 @@ class SlotsScreen extends StatelessWidget {
                                   Gap(16),
                                   CustomButton(
                                     text: slot.status,
-                                    onTap:
-                                        slot.status == 'open' && slot.isEligible
-                                            ? () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                AppRoutes.betScreen,
-                                                arguments: {
-                                                  'slot': slot.time,
-                                                  'gamesModel': gamesModel,
-                                                },
-                                              );
-                                            }
-                                            : () {
-                                              if (!slot.isEligible) {
-                                                customToast(
-                                                  context,
-                                                  text:
-                                                      'You have already placed bet',
-                                                  animatedSnackBarType:
-                                                      AnimatedSnackBarType
-                                                          .warning,
-                                                );
-                                              }
-                                            },
+                                    onTap: () {
+                                      if (slot.status == 'open') {
+                                        Navigator.pushNamed(
+                                          context,
+                                          AppRoutes.selectGameScreen,
+                                          arguments: {
+                                            'slot': slot.time,
+                                            'gamesModel': gamesModel,
+                                            'isEligible': slot.isEligible,
+                                          },
+                                        );
+                                      }
+                                    },
+
+                                    // slot.status == 'open' && slot.isEligible
+                                    //     ? () {
+                                    // Navigator.pushNamed(
+                                    //   context,
+                                    //   AppRoutes.betScreen,
+                                    //   arguments: {
+                                    //     'slot': slot.time,
+                                    //     'gamesModel': gamesModel,
+                                    //   },
+                                    // );
+                                    //     }
+                                    //     : () {
+                                    // if (!slot.isEligible) {
+                                    //   customToast(
+                                    //     context,
+                                    //     text:
+                                    //         'You have already placed bet',
+                                    //     animatedSnackBarType:
+                                    //         AnimatedSnackBarType
+                                    //             .warning,
+                                    //   );
+                                    // }
+                                    //     },
                                     backgroundColor:
                                         slot.status == 'open'
                                             ? AppColor.themePrimaryColor

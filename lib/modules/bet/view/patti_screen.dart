@@ -12,27 +12,23 @@ import 'package:kolkata_fatafat/utils/widgets/custom_error_toast.dart';
 import 'package:kolkata_fatafat/utils/widgets/custom_text.dart';
 import 'package:kolkata_fatafat/utils/widgets/custom_textfield.dart';
 
-class BetScreen extends StatelessWidget {
+class PattiScreen extends StatelessWidget {
   final dynamic data;
-  const BetScreen({super.key, this.data});
+  PattiScreen({super.key, this.data});
+
+  final TextEditingController numberOfBtController = TextEditingController();
+  final TextEditingController betAmountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    ChangeBorderCubit changeBorderCubit = BlocProvider.of<ChangeBorderCubit>(
-      context,
-    );
+    List<AddBetModel> addBetList = [];
+    TapCubit tapCubit = BlocProvider.of<TapCubit>(context);
     BetCubit betCubit = BlocProvider.of<BetCubit>(context);
 
-    final TextEditingController betAmountController = TextEditingController();
-
-    int changBorderValue = -1;
-    List<AddBetModel> addBetList = [];
-
-    changeBorderCubit.init();
+    tapCubit.clearTappedNumbers();
     betCubit.init();
 
     String slot = data['slot'];
     GamesModel gamesModel = data['gamesModel'];
-
     return Scaffold(
       appBar: CustomAppBar(title: 'Bet'),
       body: SingleChildScrollView(
@@ -40,6 +36,48 @@ class BetScreen extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: <Widget>[
+              BlocBuilder<TapCubit, List<int>>(
+                builder: (context, tappedNumbers) {
+                  numberOfBtController.text = tappedNumbers
+                      .toString()
+                      .replaceAll('[', '')
+                      .replaceAll(']', '')
+                      .replaceAll(',', '');
+                  return SizedBox(
+                    height: 80,
+
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: 3,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final text =
+                            index < tappedNumbers.length
+                                ? tappedNumbers[index].toString()
+                                : '';
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: 80,
+                            decoration: BoxDecoration(
+                              color: AppColor.borderColor,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: CustomText(
+                                text: text,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+              Gap(20),
               GridView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -55,21 +93,21 @@ class BetScreen extends StatelessWidget {
                       if (state is BetLoaded) {
                         addBetList = state.addBetList;
                       }
-                      return BlocBuilder<ChangeBorderCubit, ChangeBorderState>(
-                        builder: (context, state) {
-                          if (state is ChangeBorderLoaded) {
-                            changBorderValue = state.changeNumber;
-                          }
-
+                      return BlocBuilder<TapCubit, List<int>>(
+                        builder: (context, tappedNumbers) {
                           return InkWell(
                             borderRadius: BorderRadius.circular(12),
                             splashColor: AppColor.borderColor,
                             highlightColor: AppColor.borderColor,
-                            onTap: () {
-                              changeBorderCubit.changeBorderValue(
-                                changeNumber: index,
-                              );
-                            },
+                            onTap:
+                                tappedNumbers.length == 3
+                                    ? () {}
+                                    : () {
+                                      tapCubit.addTappedNumber(
+                                        context,
+                                        number: index,
+                                      );
+                                    },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
@@ -96,10 +134,7 @@ class BetScreen extends StatelessWidget {
 
                                 border: Border.all(
                                   width: 5,
-                                  color:
-                                      changBorderValue == index
-                                          ? AppColor.themePrimaryColor
-                                          : AppColor.transparentColor,
+                                  color: AppColor.transparentColor,
                                 ),
                               ),
                               child: Center(
@@ -135,75 +170,64 @@ class BetScreen extends StatelessWidget {
 
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: BlocBuilder<ChangeBorderCubit, ChangeBorderState>(
-                      builder: (context, state) {
-                        if (state is ChangeBorderLoaded) {
-                          changBorderValue = state.changeNumber;
-                        }
-                        return InkWell(
-                          borderRadius: BorderRadius.circular(12),
-                          splashColor: AppColor.borderColor,
-                          highlightColor: AppColor.borderColor,
-                          onTap: () async {
-                            final int minBet =
-                                double.parse(gamesModel.minBet).toInt();
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      splashColor: AppColor.borderColor,
+                      highlightColor: AppColor.borderColor,
+                      onTap: () async {
+                        final int minBet =
+                            double.parse(gamesModel.minBet).toInt();
 
-                            final int maxBet =
-                                double.parse(gamesModel.maxBet).toInt();
-                            final input = betAmountController.text;
-                            final amount = int.tryParse(input);
+                        final int maxBet =
+                            double.parse(gamesModel.maxBet).toInt();
+                        final input = betAmountController.text;
+                        final amount = int.tryParse(input);
 
-                            if (input.isEmpty) {
-                              customToast(
-                                context,
-                                text: 'Please enter an amount.',
+                        if (input.isEmpty) {
+                          customToast(
+                            context,
+                            text: 'Please enter an amount.',
 
-                                animatedSnackBarType:
-                                    AnimatedSnackBarType.error,
-                              );
-                            } else if (amount == null) {
-                              customToast(
-                                context,
-                                text: 'Invalid number.',
+                            animatedSnackBarType: AnimatedSnackBarType.error,
+                          );
+                        } else if (amount == null) {
+                          customToast(
+                            context,
+                            text: 'Invalid number.',
 
-                                animatedSnackBarType:
-                                    AnimatedSnackBarType.error,
-                              );
-                            } else if (amount < minBet) {
-                              customToast(
-                                context,
-                                text: 'Minimum bet is ₹$minBet.',
-
-                                animatedSnackBarType:
-                                    AnimatedSnackBarType.error,
-                              );
-                            } else if (amount > maxBet) {
-                              customToast(
-                                context,
-                                text: 'Maximum bet is ₹$maxBet.',
-
-                                animatedSnackBarType:
-                                    AnimatedSnackBarType.error,
-                              );
-                            } else {
-                              await betCubit.addBetSection(
-                                context,
-                                numberOfBet: changBorderValue,
-                                betAmount: betAmountController.text,
-                              );
-                              changeBorderCubit.init();
-                              betAmountController.clear();
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: CustomText(
-                              text: 'Add',
-                              color: AppColor.themePrimary2Color,
+                            animatedSnackBarType: AnimatedSnackBarType.error,
+                          );
+                        } else if (amount < minBet) {
+                          customToast(
+                            context,
+                            text: 'Minimum bet is ₹$minBet.',
+                            animatedSnackBarType: AnimatedSnackBarType.error,
+                          );
+                        } else if (amount > maxBet) {
+                          customToast(
+                            context,
+                            text: 'Maximum bet is ₹$maxBet.',
+                            animatedSnackBarType: AnimatedSnackBarType.error,
+                          );
+                        } else {
+                          await betCubit.addBetSection(
+                            context,
+                            numberOfBet: int.parse(
+                              numberOfBtController.text.replaceAll(' ', ''),
                             ),
-                          ),
-                        );
+                            betAmount: betAmountController.text,
+                          );
+                          tapCubit.clearTappedNumbers();
+                          betAmountController.clear();
+                        }
                       },
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: CustomText(
+                          text: 'Add',
+                          color: AppColor.themePrimary2Color,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -263,7 +287,7 @@ class BetScreen extends StatelessWidget {
 
                                         text: 'Rs.${addBetModel.betAmount}',
                                       ),
-                                    ],
+                                    ],  
                                   ),
                                 ),
                               ),
@@ -308,10 +332,7 @@ class BetScreen extends StatelessWidget {
                           "game_id": gamesModel.id,
                           "digit": bet.numberOfBet,
                           'game_type': 'patti',
-
-                          "amount": double.parse(
-                            bet.betAmount.toString(),
-                          ), // Convert String to double if needed
+                          "amount": double.parse(bet.betAmount.toString()),
                         };
                       }).toList();
                   Map<String, dynamic> body = {"time_slot": slot, "bets": bets};

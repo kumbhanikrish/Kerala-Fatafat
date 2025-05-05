@@ -1,6 +1,6 @@
 class AddBetModel {
   final int numberOfBet;
-  final int betAmount;
+  final dynamic betAmount;
 
   AddBetModel({required this.numberOfBet, required this.betAmount});
 }

@@ -170,19 +170,29 @@ class _SignUpSCreenState extends State<SignUpSCreen> {
                       animatedSnackBarType: AnimatedSnackBarType.error,
                     );
                   } else {
-                    Map<String, dynamic> body = {
-                      'email': emailController.text.trim(),
+                    Map<String, dynamic> registerUser = {
+                      "name": nameController.text.trim(),
+                      "email": emailController.text.trim(),
+                      "phone": numberController.text.replaceAll('+', ''),
+                      "password": passwordController.text.trim(),
+                      "c_password": rePasswordController.text.trim(),
+                      "referal_code": referralCodeController.text.trim(),
                     };
 
-                    authCubit.sendEmailCode(
-                      context,
-                      body: body,
-                      name: nameController.text.trim(),
-                      number: numberController.text.trim(),
-                      pass: passwordController.text.trim(),
-                      rePass: rePasswordController.text.trim(),
-                      referral: referralCodeController.text.trim(),
-                    );
+                    authCubit.register(context, body: registerUser);
+                    // Map<String, dynamic> body = {
+                    //   'email': emailController.text.trim(),
+                    // };
+
+                    // authCubit.sendEmailCode(
+                    //   context,
+                    //   body: body,
+                    //   name: nameController.text.trim(),
+                    //   number: numberController.text.trim(),
+                    //   pass: passwordController.text.trim(),
+                    //   rePass: rePasswordController.text.trim(),
+                    //   referral: referralCodeController.text.trim(),
+                    // );
                   }
                 },
               ),

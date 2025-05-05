@@ -18,4 +18,6 @@ class AppRoutes {
   static String otpVerificationScreen = '/otpVerificationScreen';
   static String aboutUsScreen = '/aboutUsScreen';
   static String referAndEarnScreen = '/referAndEarnScreen';
+  static String pattiScreen = '/pattiScreen';
+  static String selectGameScreen = '/selectGameScreen';
 }

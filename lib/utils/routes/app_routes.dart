@@ -7,7 +7,9 @@ import 'package:kolkata_fatafat/modules/auth/view/sign_up_screen.dart';
 import 'package:kolkata_fatafat/modules/auth/view/splash_screen.dart';
 import 'package:kolkata_fatafat/modules/bet/view/bet_screen.dart';
 import 'package:kolkata_fatafat/modules/dashboard/view/dashboard_screen.dart';
+import 'package:kolkata_fatafat/modules/home/view/select_game_screen.dart';
 import 'package:kolkata_fatafat/modules/home/view/slots_screen.dart';
+import 'package:kolkata_fatafat/modules/bet/view/patti_screen.dart';
 import 'package:kolkata_fatafat/modules/profile/view/about_us_screen.dart';
 import 'package:kolkata_fatafat/modules/profile/view/bank_detail_screen.dart';
 import 'package:kolkata_fatafat/modules/profile/view/change_password_screen.dart';
@@ -49,7 +51,13 @@ final Map<String, WidgetBuilder> appRoutes = {
         data: ModalRoute.of(context)?.settings.arguments,
       ),
   AppRoutes.aboutUsScreen: (context) => AboutUsScreen(),
+  AppRoutes.pattiScreen:
+      (context) =>
+          PattiScreen(data: ModalRoute.of(context)?.settings.arguments),
   AppRoutes.referAndEarnScreen:
       (context) =>
           ReferAndEarnScreen(data: ModalRoute.of(context)?.settings.arguments),
+  AppRoutes.selectGameScreen:
+      (context) =>
+          SelectGameScreen(data: ModalRoute.of(context)?.settings.arguments),
 };

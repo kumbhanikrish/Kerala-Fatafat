@@ -13,6 +13,7 @@ import 'package:kolkata_fatafat/modules/bet/cubit/bet_cubit.dart';
 import 'package:kolkata_fatafat/modules/home/cubit/game_slot_cubit.dart';
 import 'package:kolkata_fatafat/modules/home/cubit/home_cubit.dart';
 import 'package:kolkata_fatafat/modules/money/cubit/money_cubit.dart';
+
 import 'package:kolkata_fatafat/modules/profile/cubit/profile_cubit.dart';
 import 'package:kolkata_fatafat/modules/result/cubit/result_cubit.dart';
 import 'package:kolkata_fatafat/modules/wallet/cubit/wallet_cubit.dart';
@@ -186,4 +187,5 @@ dynamic providers = [
   BlocProvider(create: (context) => WalletCubit()),
   BlocProvider(create: (context) => ProfileCubit()),
   BlocProvider(create: (context) => ResultCubit()),
+  BlocProvider(create: (context) => TapCubit()),
 ];
