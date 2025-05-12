@@ -20,4 +20,5 @@ class AppApi {
   static String sendEmailCode = '$baseUrl/send-email-verification-code';
   static String verifyEmailCode = '$baseUrl/verify-email-code';
   static String homeBanners = '$baseUrl/home-banners';
+  static String versionCheck = '$baseUrl/version-check';
 }

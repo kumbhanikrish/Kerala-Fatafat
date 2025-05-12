@@ -83,19 +83,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     },
                   ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: CustomTextButton(
-                      text: 'Forgot the Password?',
-                      onPressed: () async {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.forgotPasswordScreen,
-                        );
-                      },
-                      color: AppColor.themePrimaryColor,
-                    ),
-                  ),
+                  // Align(
+                  //   alignment: Alignment.topRight,
+                  //   child: CustomTextButton(
+                  //     text: 'Forgot the Password?',
+                  //     onPressed: () async {
+                  //       Navigator.pushNamed(
+                  //         context,
+                  //         AppRoutes.forgotPasswordScreen,
+                  //       );
+                  //     },
+                  //     color: AppColor.themePrimaryColor,
+                  //   ),
+                  // ),
                   const Gap(30),
                   CustomButton(
                     text: 'Login',

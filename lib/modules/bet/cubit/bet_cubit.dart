@@ -41,6 +41,7 @@ class BetCubit extends Cubit<BetState> {
       );
       emit(BetLoaded(addBetList: []));
     } else {
+      log('skjdfgosgdu ::${response.data['message']}');
       customToast(
         context,
         text: response.data['message'],
@@ -117,7 +118,7 @@ class TapCubit extends Cubit<List<int>> {
   TapCubit() : super([]);
 
   void addTappedNumber(BuildContext context, {required int number}) {
-    List<String> notValidNo = [
+    List<String> validNumbers = [
       '100',
       '200',
       '300',
@@ -343,17 +344,23 @@ class TapCubit extends Cubit<List<int>> {
     final updatedList = List<int>.from(state);
     updatedList.add(number);
     String result = updatedList.join('');
-    log('updatedList.length == 3 ::$result');
+    log('updatedList.length == 3 :: $result');
 
-    if (notValidNo.contains(result)) {
-      updatedList.clear();
-      customToast(
-        context,
-        text: 'Not valid $result no.',
-        animatedSnackBarType: AnimatedSnackBarType.error,
-      );
+    if (result.length == 3) {
+      if (validNumbers.contains(result)) {
+        emit(updatedList);
+      } else {
+        updatedList.clear();
+        customToast(
+          context,
+          text: 'Only valid numbers allowed. "$result" is not in the list.',
+          animatedSnackBarType: AnimatedSnackBarType.error,
+        );
+        emit(updatedList);
+      }
+    } else {
+      emit(updatedList);
     }
-    emit(updatedList);
   }
 
   void clearTappedNumbers() {

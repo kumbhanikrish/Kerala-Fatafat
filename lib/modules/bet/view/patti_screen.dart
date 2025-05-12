@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,37 +45,50 @@ class PattiScreen extends StatelessWidget {
                       .replaceAll('[', '')
                       .replaceAll(']', '')
                       .replaceAll(',', '');
-                  return SizedBox(
-                    height: 80,
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 80,
 
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: 3,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final text =
-                            index < tappedNumbers.length
-                                ? tappedNumbers[index].toString()
-                                : '';
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: 80,
-                            decoration: BoxDecoration(
-                              color: AppColor.borderColor,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Center(
-                              child: CustomText(
-                                text: text,
-                                fontWeight: FontWeight.bold,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 3,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final text =
+                                index < tappedNumbers.length
+                                    ? tappedNumbers[index].toString()
+                                    : '';
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  color: AppColor.borderColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: CustomText(
+                                    text: text,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                            );
+                          },
+                        ),
+                      ),
+                      if (numberOfBtController.text.isNotEmpty) ...[
+                        CustomIconButton(
+                          icon: Icons.close,
+                          onPressed: () {
+                            tapCubit.clearTappedNumbers();
+                          },
+                        ),
+                      ],
+                    ],
                   );
                 },
               ),
@@ -95,48 +110,41 @@ class PattiScreen extends StatelessWidget {
                       }
                       return BlocBuilder<TapCubit, List<int>>(
                         builder: (context, tappedNumbers) {
-                          return InkWell(
+                          return Material(
                             borderRadius: BorderRadius.circular(12),
-                            splashColor: AppColor.borderColor,
-                            highlightColor: AppColor.borderColor,
-                            onTap:
-                                tappedNumbers.length == 3
-                                    ? () {}
-                                    : () {
-                                      tapCubit.addTappedNumber(
-                                        context,
-                                        number: index,
-                                      );
-                                    },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color:
-                                    index == 0
-                                        ? Colors.green
-                                        : index == 1
-                                        ? Colors.deepOrange
-                                        : index == 2
-                                        ? Colors.blue
-                                        : index == 3
-                                        ? Colors.cyan
-                                        : index == 4
-                                        ? Colors.deepPurpleAccent
-                                        : index == 5
-                                        ? Colors.pink
-                                        : index == 6
-                                        ? Colors.teal
-                                        : index == 7
-                                        ? Colors.grey
-                                        : index == 8
-                                        ? Colors.blueGrey
-                                        : Colors.brown,
-
-                                border: Border.all(
-                                  width: 5,
-                                  color: AppColor.transparentColor,
-                                ),
-                              ),
+                            color:
+                                index == 0
+                                    ? Colors.green
+                                    : index == 1
+                                    ? Colors.deepOrange
+                                    : index == 2
+                                    ? Colors.blue
+                                    : index == 3
+                                    ? Colors.cyan
+                                    : index == 4
+                                    ? Colors.deepPurpleAccent
+                                    : index == 5
+                                    ? Colors.pink
+                                    : index == 6
+                                    ? Colors.teal
+                                    : index == 7
+                                    ? Colors.grey
+                                    : index == 8
+                                    ? Colors.blueGrey
+                                    : Colors.brown,
+                            child: InkWell(
+                              splashColor: AppColor.greyColor,
+                              highlightColor: AppColor.greyColor,
+                              borderRadius: BorderRadius.circular(12),
+                              onTap:
+                                  tappedNumbers.length == 3
+                                      ? () {}
+                                      : () {
+                                        tapCubit.addTappedNumber(
+                                          context,
+                                          number: index,
+                                        );
+                                      },
                               child: Center(
                                 child: CustomText(
                                   text: '$index ',
@@ -175,11 +183,11 @@ class PattiScreen extends StatelessWidget {
                       splashColor: AppColor.borderColor,
                       highlightColor: AppColor.borderColor,
                       onTap: () async {
-                        final int minBet =
-                            double.parse(gamesModel.minBet).toInt();
+                        // final int minBet =
+                        //     double.parse(gamesModel.minBet).toInt();
 
-                        final int maxBet =
-                            double.parse(gamesModel.maxBet).toInt();
+                        // final int maxBet =
+                        //     double.parse(gamesModel.maxBet).toInt();
                         final input = betAmountController.text;
                         final amount = int.tryParse(input);
 
@@ -197,16 +205,16 @@ class PattiScreen extends StatelessWidget {
 
                             animatedSnackBarType: AnimatedSnackBarType.error,
                           );
-                        } else if (amount < minBet) {
+                        } else if (amount < 1) {
                           customToast(
                             context,
-                            text: 'Minimum bet is ₹$minBet.',
+                            text: 'Minimum bet is ₹1.',
                             animatedSnackBarType: AnimatedSnackBarType.error,
                           );
-                        } else if (amount > maxBet) {
+                        } else if (amount > 1000) {
                           customToast(
                             context,
-                            text: 'Maximum bet is ₹$maxBet.',
+                            text: 'Maximum bet is ₹1000.',
                             animatedSnackBarType: AnimatedSnackBarType.error,
                           );
                         } else {
@@ -287,7 +295,7 @@ class PattiScreen extends StatelessWidget {
 
                                         text: 'Rs.${addBetModel.betAmount}',
                                       ),
-                                    ],  
+                                    ],
                                   ),
                                 ),
                               ),
@@ -331,11 +339,17 @@ class PattiScreen extends StatelessWidget {
                         return {
                           "game_id": gamesModel.id,
                           "digit": bet.numberOfBet,
-                          'game_type': 'patti',
                           "amount": double.parse(bet.betAmount.toString()),
                         };
                       }).toList();
-                  Map<String, dynamic> body = {"time_slot": slot, "bets": bets};
+
+                  Map<String, dynamic> body = {
+                    "time_slot": slot,
+                    "bets": bets,
+                    'game_type': 'patti',
+                  };
+
+                  log('bodybodybody ::$body');
                   betCubit.addBet(context, gameId: gamesModel.id, body: body);
                 },
               ),

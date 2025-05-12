@@ -29,6 +29,7 @@ class AppImage {
   static String about = 'assets/image/about.svg';
   static String referAndEarn = 'assets/image/referAndEarn.svg';
   static String outlineWhatsApp = 'assets/image/outline-whatsApp.svg';
+  static String referImage = 'assets/image/refer-image.jpeg';
   // static String gift = 'assets/image/gift.svg';
   static String gift = 'assets/image/gift.json';
 }

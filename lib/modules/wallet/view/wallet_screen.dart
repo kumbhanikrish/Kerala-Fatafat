@@ -21,7 +21,7 @@ class WalletScreen extends StatelessWidget {
     BlocProvider.of<WalletCubit>(context).wallet(context);
     BottomNavCubit bottomNavCubit = BlocProvider.of<BottomNavCubit>(context);
 
-    WalletModel walletModel = WalletModel(walletBalance: 0, transactions: []);
+    WalletModel walletModel = WalletModel(walletBalance: '', transactions: []);
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Wallet',
@@ -254,7 +254,7 @@ class WalletScreen extends StatelessWidget {
                                                       text: DateFormat(
                                                         'dd-MM-yyyy HH:mm',
                                                       ).format(
-                                                        transaction.timestamp,
+                                                        transaction.createdAt,
                                                       ),
 
                                                       color:
@@ -270,6 +270,9 @@ class WalletScreen extends StatelessWidget {
                                                   Gap(5),
 
                                                   Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: <Widget>[
                                                       CustomText(
                                                         text: 'Reason : ',
@@ -277,12 +280,15 @@ class WalletScreen extends StatelessWidget {
                                                         color:
                                                             AppColor.redColor,
                                                       ),
-                                                      CustomText(
-                                                        text: transaction.note,
+                                                      Expanded(
+                                                        child: CustomText(
+                                                          text:
+                                                              transaction.note,
 
-                                                        color:
-                                                            AppColor
-                                                                .red100Color,
+                                                          color:
+                                                              AppColor
+                                                                  .red100Color,
+                                                        ),
                                                       ),
                                                     ],
                                                   ),

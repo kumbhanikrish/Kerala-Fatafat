@@ -1,5 +1,5 @@
 class WalletModel {
-  final int walletBalance;
+  final String walletBalance;
   final List<Transaction> transactions;
 
   WalletModel({required this.walletBalance, required this.transactions});
@@ -20,7 +20,8 @@ class Transaction {
   final dynamic photo;
   final String status;
   final String note;
-  final DateTime timestamp;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   Transaction({
     required this.uuid,
@@ -30,7 +31,8 @@ class Transaction {
     required this.photo,
     required this.status,
     required this.note,
-    required this.timestamp,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
@@ -41,6 +43,7 @@ class Transaction {
     photo: json["photo"] ?? '',
     status: json["status"],
     note: json["note"] ?? '',
-    timestamp: DateTime.parse(json["timestamp"]),
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
   );
 }

@@ -19,7 +19,8 @@ class SelectGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String slot = data['slot'];
-    bool isEligible = data['isEligible'];
+    bool isEligibleSingle = data['isEligibleSingle'];
+    bool isEligiblePatti = data['isEligiblePatti'];
     GamesModel gamesModel = data['gamesModel'];
     return Scaffold(
       appBar: CustomAppBar(title: 'Games'),
@@ -40,39 +41,37 @@ class SelectGameScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: InkWell(
-                onTap:
-                    isEligible
-                        ? () {
-                          if (gamesList[index].numberOfBet == 1) {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.betScreen,
-                              arguments: {
-                                'slot': slot,
-                                'gamesModel': gamesModel,
-                              },
-                            );
-                          } else if (gamesList[index].numberOfBet == 2) {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutes.pattiScreen,
-                              arguments: {
-                                'slot': slot,
-                                'gamesModel': gamesModel,
-                              },
-                            );
-                          }
-                        }
-                        : () {
-                          if (!isEligible) {
-                            customToast(
-                              context,
-                              text: 'You have already placed bet',
-                              animatedSnackBarType:
-                                  AnimatedSnackBarType.warning,
-                            );
-                          }
-                        },
+                onTap: () {
+                  if (gamesList[index].numberOfBet == 1) {
+                    if (isEligibleSingle) {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.betScreen,
+                        arguments: {'slot': slot, 'gamesModel': gamesModel},
+                      );
+                    } else {
+                      customToast(
+                        context,
+                        text: 'You have already placed bet',
+                        animatedSnackBarType: AnimatedSnackBarType.warning,
+                      );
+                    }
+                  } else if (gamesList[index].numberOfBet == 2) {
+                    if (isEligiblePatti) {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.pattiScreen,
+                        arguments: {'slot': slot, 'gamesModel': gamesModel},
+                      );
+                    } else {
+                      customToast(
+                        context,
+                        text: 'You have already placed bet',
+                        animatedSnackBarType: AnimatedSnackBarType.warning,
+                      );
+                    }
+                  }
+                },
                 child: Center(
                   child: CustomText(
                     text: gamesList[index].betAmount,

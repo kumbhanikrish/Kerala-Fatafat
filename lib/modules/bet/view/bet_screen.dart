@@ -145,11 +145,11 @@ class BetScreen extends StatelessWidget {
                           splashColor: AppColor.borderColor,
                           highlightColor: AppColor.borderColor,
                           onTap: () async {
-                            final int minBet =
-                                double.parse(gamesModel.minBet).toInt();
+                            // final int minBet =
+                            //     double.parse(gamesModel.minBet).toInt();
 
-                            final int maxBet =
-                                double.parse(gamesModel.maxBet).toInt();
+                            // final int maxBet =
+                            //     double.parse(gamesModel.maxBet).toInt();
                             final input = betAmountController.text;
                             final amount = int.tryParse(input);
 
@@ -169,18 +169,18 @@ class BetScreen extends StatelessWidget {
                                 animatedSnackBarType:
                                     AnimatedSnackBarType.error,
                               );
-                            } else if (amount < minBet) {
+                            } else if (amount < 10) {
                               customToast(
                                 context,
-                                text: 'Minimum bet is ₹$minBet.',
+                                text: 'Minimum bet is ₹10.',
 
                                 animatedSnackBarType:
                                     AnimatedSnackBarType.error,
                               );
-                            } else if (amount > maxBet) {
+                            } else if (amount > 1000) {
                               customToast(
                                 context,
-                                text: 'Maximum bet is ₹$maxBet.',
+                                text: 'Maximum bet is ₹1000.',
 
                                 animatedSnackBarType:
                                     AnimatedSnackBarType.error,
@@ -307,14 +307,17 @@ class BetScreen extends StatelessWidget {
                         return {
                           "game_id": gamesModel.id,
                           "digit": bet.numberOfBet,
-                          'game_type': 'patti',
 
                           "amount": double.parse(
                             bet.betAmount.toString(),
                           ), // Convert String to double if needed
                         };
                       }).toList();
-                  Map<String, dynamic> body = {"time_slot": slot, "bets": bets};
+                  Map<String, dynamic> body = {
+                    "time_slot": slot,
+                    "bets": bets,
+                    'game_type': 'single',
+                  };
                   betCubit.addBet(context, gameId: gamesModel.id, body: body);
                 },
               ),

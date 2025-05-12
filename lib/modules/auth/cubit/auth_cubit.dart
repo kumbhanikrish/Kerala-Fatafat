@@ -13,6 +13,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:kolkata_fatafat/main.dart';
 import 'package:kolkata_fatafat/modules/auth/repository/auth_repository.dart';
+import 'package:kolkata_fatafat/modules/auth/view/splash_screen.dart';
 import 'package:kolkata_fatafat/modules/profile/model/user_model.dart';
 
 import 'package:kolkata_fatafat/utils/constant/routes_constant.dart';
@@ -202,6 +203,54 @@ class AuthCubit extends Cubit<AuthState> {
 
       return response;
     }
+  }
+
+  Future<Response> versionCheck(
+    BuildContext context, {
+    required Map<String, dynamic> body,
+  }) async {
+    Response response = await authRepository.versionCheck(context, body: body);
+
+    if (response.data['needs_update'] == true) {
+      customUpdateAlertPopUp(context);
+      return response;
+    } else {
+      String authToken = await localDataSaver.getAuthToken();
+
+      log('authTokenauthToken ::$authToken');
+      if (authToken.isEmpty) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.loginScreen,
+          (route) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppRoutes.dashboardScreen,
+          (route) => false,
+        );
+      }
+
+      return response;
+    }
+
+    // if (response.statusCode == 200) {
+    //   customToast(
+    //     context,
+    //     text: response.data['message'],
+    //     animatedSnackBarType: AnimatedSnackBarType.success,
+    //   );
+    //   return response;
+    // } else {
+    //   customToast(
+    //     context,
+    //     text: response.data['message'],
+    //     animatedSnackBarType: AnimatedSnackBarType.error,
+    //   );
+
+    //   return response;
+    // }
   }
 
   Future<Response> verifyEmailCode(

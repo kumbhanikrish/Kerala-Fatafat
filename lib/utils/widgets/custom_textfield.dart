@@ -1,5 +1,6 @@
 // import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 // import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kolkata_fatafat/utils/theme/colors.dart';
@@ -19,6 +20,9 @@ class CustomTextField extends StatelessWidget {
   final int? line;
   final int? maxLength;
   final Color? fillColor;
+  final Color? borderColor;
+  final Color? inputColor;
+  final List<TextInputFormatter>? inputFormatters;
   final void Function()? onTap;
   final void Function(String)? onChanged;
 
@@ -30,8 +34,11 @@ class CustomTextField extends StatelessWidget {
     this.readOnly = false,
     this.prefixIcon,
     this.suffixIcon,
+    this.borderColor,
     this.maxLength,
     this.onChanged,
+    this.inputColor,
+    this.inputFormatters,
     this.color,
     this.text = '',
     this.focusNode,
@@ -65,8 +72,9 @@ class CustomTextField extends StatelessWidget {
           maxLength: maxLength,
           onTap: onTap,
           onChanged: onChanged,
-          cursorColor: AppColor.themePrimary2Color,
-          style: TextStyle(color: AppColor.themePrimary2Color),
+          inputFormatters: inputFormatters,
+          cursorColor: inputColor ?? AppColor.themePrimary2Color,
+          style: TextStyle(color: inputColor ?? AppColor.themePrimary2Color),
           decoration: InputDecoration(
             hintText: hintText,
             prefixIcon: prefixIcon,
@@ -83,19 +91,27 @@ class CustomTextField extends StatelessWidget {
 
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColor.borderColor),
+              borderSide: BorderSide(
+                color: borderColor ?? AppColor.borderColor,
+              ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColor.borderColor),
+              borderSide: BorderSide(
+                color: borderColor ?? AppColor.borderColor,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColor.borderColor),
+              borderSide: BorderSide(
+                color: borderColor ?? AppColor.borderColor,
+              ),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColor.borderColor),
+              borderSide: BorderSide(
+                color: borderColor ?? AppColor.borderColor,
+              ),
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,

@@ -1,6 +1,6 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 
@@ -58,11 +58,8 @@ class ApiServices {
           (route) => false,
         );
       }
-      customToast(
-        context,
-        text: e.response?.data['message'],
-        animatedSnackBarType: AnimatedSnackBarType.error,
-      );
+      final errorData = e.response?.data['data'];
+      showValidationErrors(context, responseBody: jsonEncode(errorData));
     } catch (e) {
       await EasyLoading.dismiss();
 
@@ -112,11 +109,13 @@ class ApiServices {
       }
 
       log("DioException :: ${e.response?.data} , ${e.response?.statusCode}");
+      final errorData = e.response?.data['data'];
+      final messages = e.response?.data['messages'];
 
-      customToast(
+      log('errorData ::$errorData');
+      showValidationErrors(
         context,
-        text: e.response?.data['message'],
-        animatedSnackBarType: AnimatedSnackBarType.error,
+        responseBody: jsonEncode(errorData ?? messages),
       );
     } catch (e) {
       await EasyLoading.dismiss();
@@ -166,11 +165,8 @@ class ApiServices {
           (route) => false,
         );
       }
-      customToast(
-        context,
-        text: e.response?.data['message'],
-        animatedSnackBarType: AnimatedSnackBarType.error,
-      );
+      final errorData = e.response?.data['data'];
+      showValidationErrors(context, responseBody: jsonEncode(errorData));
       log("DioException :: ${e.response?.data} , ${e.response?.statusCode}");
     } catch (e) {
       await EasyLoading.dismiss();
@@ -221,8 +217,6 @@ class ApiServices {
       if (response.statusCode == 200) {
         await EasyLoading.dismiss();
 
-        log("Success: ${response.data}");
-
         return response;
       }
     } on DioException catch (e) {
@@ -237,11 +231,8 @@ class ApiServices {
           (route) => false,
         );
       }
-      customToast(
-        context,
-        text: e.response?.data['message'],
-        animatedSnackBarType: AnimatedSnackBarType.error,
-      );
+      final errorData = e.response?.data['data'];
+      showValidationErrors(context, responseBody: jsonEncode(errorData));
       log("DioException :: ${e.response?.data} , ${e.response?.statusCode}");
     } catch (e) {
       await EasyLoading.dismiss();

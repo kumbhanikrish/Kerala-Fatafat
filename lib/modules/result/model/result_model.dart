@@ -19,24 +19,28 @@ class ResultModel {
 
 class Session {
   final String session;
-  final int winNumber;
+  final dynamic winNumber;
+  final dynamic winPattiNumber;
   final int totalWinners;
 
   Session({
     required this.session,
     required this.winNumber,
+    required this.winPattiNumber,
     required this.totalWinners,
   });
 
   factory Session.fromJson(Map<String, dynamic> json) => Session(
     session: json["session"],
     winNumber: json["win_number"],
+    winPattiNumber: json["win_patti_number"],
     totalWinners: json["total_winners"],
   );
 
   Map<String, dynamic> toJson() => {
     "session": session,
     "win_number": winNumber,
+    "win_patti_number": winPattiNumber,
     "total_winners": totalWinners,
   };
 }

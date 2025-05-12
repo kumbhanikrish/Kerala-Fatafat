@@ -11,7 +11,7 @@ class WalletCubit extends Cubit<WalletState> {
 
   WalletRepository walletRepository = WalletRepository();
   Future<Response> wallet(BuildContext context) async {
-    WalletModel walletModel = WalletModel(walletBalance: 0, transactions: []);
+    WalletModel walletModel = WalletModel(walletBalance: '', transactions: []);
     final Response response = await walletRepository.wallet(context);
     if (response.statusCode == 200) {
       walletModel = WalletModel.fromJson(response.data);

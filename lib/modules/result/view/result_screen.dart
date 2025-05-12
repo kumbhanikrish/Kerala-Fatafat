@@ -49,12 +49,12 @@ class ResultScreen extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     ResultModel resultModel = resultList[index];
 
-                    resultModel.session.sort((a, b) {
-                      final format = DateFormat('hh:mm a');
-                      final timeA = format.parse(a.session.split(' - ')[0]);
-                      final timeB = format.parse(b.session.split(' - ')[0]);
-                      return timeA.compareTo(timeB);
-                    });
+                    // resultModel.session.sort((a, b) {
+                    //   final format = DateFormat('hh:mm a');
+                    //   final timeA = format.parse(a.session.split(' - ')[0]);
+                    //   final timeB = format.parse(b.session.split(' - ')[0]);
+                    //   return timeA.compareTo(timeB);
+                    // });
                     return Theme(
                       data: Theme.of(context).copyWith(
                         dividerColor: AppColor.transparentColor,
@@ -108,56 +108,56 @@ class ResultScreen extends StatelessWidget {
                                       padding: const EdgeInsets.all(8),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.start,
+                                            MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
                                           Container(
+                                            width: 38,
+                                            height: 38,
+
                                             decoration: BoxDecoration(
                                               color: AppColor.backgroundColor,
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 15,
-                                              vertical: 8,
-                                            ),
-                                            child: CustomText(
-                                              text:
-                                                  session.winNumber.toString(),
-                                              color: AppColor.whiteColor,
-                                              fontWeight: FontWeight.bold,
+
+                                            child: Center(
+                                              child: CustomText(
+                                                text:
+                                                    session.winNumber
+                                                        .toString(),
+                                                color: AppColor.whiteColor,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                             ),
                                           ),
 
-                                          Gap(20),
+                                          Gap(10),
 
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  CustomText(
-                                                    text: 'Winning Person :',
-                                                    color: AppColor.borderColor,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  Gap(5),
-                                                  CustomText(
-                                                    text:
-                                                        session.totalWinners
-                                                            .toString(),
-                                                    color: AppColor.whiteColor,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ],
-                                              ),
+                                          CustomText(
+                                            text: session.session,
+                                            color: AppColor.borderColor,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          Gap(10),
 
-                                              CustomText(
-                                                text: session.session,
-                                                color: AppColor.borderColor,
+                                          Container(
+                                            width: 60,
+                                            height: 38,
+                                            decoration: BoxDecoration(
+                                              color: AppColor.backgroundColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+
+                                            child: Center(
+                                              child: CustomText(
+                                                text:
+                                                    session.winPattiNumber
+                                                        .toString(),
+                                                color: AppColor.whiteColor,
                                                 fontWeight: FontWeight.bold,
                                               ),
-                                            ],
+                                            ),
                                           ),
                                         ],
                                       ),

@@ -6,6 +6,8 @@ class AppColor {
   static Color themePrimary3Color = const Color(0xFFE4E4E4);
   static Color backgroundColor = const Color(0xFF050a1d);
   static Color borderColor = const Color(0xFF172033);
+  static Color referralBG = const Color(0xFF6b4b97);
+  static Color referralTextColor = const Color(0xFF544378);
   static Color whiteColor = Colors.white;
 
   static Color grey50Color = Colors.grey.shade50;
@@ -19,4 +21,6 @@ class AppColor {
   static Color greyColor = Colors.grey;
   static Color grey100Color = Colors.grey.shade100;
   static Color transparentColor = Colors.transparent;
+  static Color blueColor = Colors.blue;
+  static Color blue100Color = Colors.blue.shade100;
 }

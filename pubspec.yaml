@@ -59,6 +59,8 @@ dependencies:
   dotted_border: ^2.1.0
   share_plus: ^10.1.4
   path_provider: ^2.1.5
+  mobile_scanner: ^7.0.0
+  package_info_plus: ^8.3.0
   
 
 dev_dependencies:

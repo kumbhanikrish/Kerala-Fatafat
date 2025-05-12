@@ -88,4 +88,16 @@ class AuthRepository {
 
     return response;
   }
+  Future<Response> versionCheck(
+    BuildContext context, {
+    required Map<String, dynamic> body,
+  }) async {
+    Response response = await api.postDynamicData(
+      context,
+      AppApi.versionCheck,
+      body,
+    );
+
+    return response;
+  }
 }

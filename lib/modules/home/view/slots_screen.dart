@@ -1,4 +1,3 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -9,7 +8,6 @@ import 'package:kolkata_fatafat/utils/constant/routes_constant.dart';
 import 'package:kolkata_fatafat/utils/theme/colors.dart';
 import 'package:kolkata_fatafat/utils/widgets/custom_app_bar.dart';
 import 'package:kolkata_fatafat/utils/widgets/custom_button.dart';
-import 'package:kolkata_fatafat/utils/widgets/custom_error_toast.dart';
 import 'package:kolkata_fatafat/utils/widgets/custom_text.dart';
 
 class SlotsScreen extends StatelessWidget {
@@ -73,14 +71,17 @@ class SlotsScreen extends StatelessWidget {
                                   CustomButton(
                                     text: slot.status,
                                     onTap: () {
-                                      if (slot.status == 'open') {
+                                      if (slot.status == 'upcoming') {
                                         Navigator.pushNamed(
                                           context,
                                           AppRoutes.selectGameScreen,
                                           arguments: {
                                             'slot': slot.time,
                                             'gamesModel': gamesModel,
-                                            'isEligible': slot.isEligible,
+                                            'isEligibleSingle':
+                                                slot.isEligibleSingle,
+                                            'isEligiblePatti':
+                                                slot.isEligiblePatti,
                                           },
                                         );
                                       }
